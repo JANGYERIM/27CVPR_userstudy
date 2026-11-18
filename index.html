@@ -409,7 +409,7 @@ function shuffled(list) {
 }
 
 // Decided once per session.
-const order = STUDY.shuffleTrials ? shuffled(STUDY.trials) : STUDY.trials.slice();
+let order = STUDY.shuffleTrials ? shuffled(STUDY.trials) : STUDY.trials.slice();
 
 const state = {
   view: "intro",
@@ -421,6 +421,75 @@ const state = {
   sendStatus: "idle"
 };
 
+const DRAFT_PREFIX = "user-study-draft:";
+
+function draftKey(email) {
+  return DRAFT_PREFIX + email.trim().toLowerCase();
+}
+
+function saveDraft() {
+  if (!state.email || !state.startedAt || state.sendStatus === "sent") return;
+  try {
+    localStorage.setItem(draftKey(state.email), JSON.stringify({
+      email: state.email,
+      lang: state.lang,
+      startedAt: state.startedAt,
+      index: state.index,
+      order: order.map(trial => trial.id),
+      answers: state.answers
+    }));
+  } catch (error) {
+    console.error("Could not save the study draft in this browser.", error);
+  }
+}
+
+function restoreDraft(email) {
+  let raw;
+  try {
+    raw = localStorage.getItem(draftKey(email));
+  } catch (error) {
+    console.error("Could not read the study draft from this browser.", error);
+    return false;
+  }
+  if (!raw) return false;
+
+  try {
+    const draft = JSON.parse(raw);
+    const trialsById = new Map(STUDY.trials.map(trial => [trial.id, trial]));
+    const validOrder = Array.isArray(draft.order)
+      && draft.order.length === STUDY.trials.length
+      && new Set(draft.order).size === STUDY.trials.length
+      && draft.order.every(id => trialsById.has(id));
+    const validAnswers = Array.isArray(draft.answers)
+      && draft.answers.length === STUDY.trials.length
+      && draft.answers.every(row => Array.isArray(row)
+        && row.length === STUDY.questions.length
+        && row.every(answer => answer === null || answer === "A" || answer === "B"));
+
+    if (draft.email.trim().toLowerCase() !== email.trim().toLowerCase()
+      || !validOrder
+      || !validAnswers
+      || !Number.isInteger(draft.index)
+      || draft.index < 0
+      || draft.index >= STUDY.trials.length
+      || !["en", "ko"].includes(draft.lang)
+      || typeof draft.startedAt !== "string") {
+      throw new Error("The saved study draft has an invalid format.");
+    }
+
+    order = draft.order.map(id => trialsById.get(id));
+    state.email = email;
+    state.lang = draft.lang;
+    state.startedAt = draft.startedAt;
+    state.index = draft.index;
+    state.answers = draft.answers;
+    return true;
+  } catch (error) {
+    console.error("Could not restore the saved study draft.", error);
+    return false;
+  }
+}
+
 // Text in the chosen language.
 function t(value) { return value && typeof value === "object" ? (value[state.lang] ?? value.en) : value; }
 function ui() { return UI[state.lang]; }
@@ -428,6 +497,7 @@ function ui() { return UI[state.lang]; }
 function show(view, index) {
   state.view = view;
   if (index != null) state.index = index;
+  if (view === "trial" || view === "review") saveDraft();
   render();
   window.scrollTo(0, 0);
 }
@@ -459,6 +529,14 @@ function viewIntro() {
       input.focus();
       return;
     }
+    if (restoreDraft(state.email)) {
+      show("trial", state.index);
+      return;
+    }
+    state.index = 0;
+    state.startedAt = null;
+    state.answers = order.map(() => STUDY.questions.map(() => null));
+    state.sendStatus = "idle";
     if (!state.startedAt) state.startedAt = new Date().toISOString();
     show("trial", 0);
   }
@@ -544,7 +622,7 @@ function viewTrial() {
       ),
       h("div", { class: "opts" }, ["A", "B"].map(letter => {
         const radio = h("input", { type: "radio", name: "q" + q, value: letter, checked: answers[q] === letter,
-          onchange: () => { answers[q] = letter; refresh(); } });
+          onchange: () => { answers[q] = letter; saveDraft(); refresh(); } });
         return h("label", { class: "opt" }, radio, h("span", {}, letter));
       }))
     )
@@ -623,6 +701,11 @@ async function submit() {
       body: JSON.stringify(payload)
     });
     state.sendStatus = "sent";
+    try {
+      localStorage.removeItem(draftKey(state.email));
+    } catch (error) {
+      console.error("Could not clear the submitted study draft from this browser.", error);
+    }
   } catch (e) {
     state.sendStatus = "failed";
   }
