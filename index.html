@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #E6F1FB;
+  --card: #FFFFFF;
+  --chip: #E6F1FB;
+  --ink: #132A45;
+  --muted: #4B607A;
+  --line: #C9DFF3;
+  --accent: #AFD3F7;
+  --on-accent: #132A45;
+  --deep: #1F5FA8;
+  --warn: #A12B12;
+  --invert-bg: #132A45;
+  --invert-ink: #FFFFFF;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #0F1B2A;
+    --card: #17273A;
+    --chip: #22364D;
+    --ink: #E8F1FB;
+    --muted: #A9BDD3;
+    --line: #2A405A;
+    --accent: #AFD3F7;
+    --on-accent: #132A45;
+    --deep: #8FC1F2;
+    --warn: #FFA08A;
+    --invert-bg: #E8F1FB;
+    --invert-ink: #132A45;
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Plus Jakarta Sans", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+h1, h2, h3, p { margin: 0; }
+
+main { margin: 0 auto; display: flex; flex-direction: column; }
+main.narrow { max-width: 780px; padding: 40px 20px 88px; gap: 16px; }
+main.wide { max-width: 1240px; padding: 28px 20px 72px; gap: 18px; }
+
+.card {
+  margin: 0; border: 0; min-width: 0;
+  background: var(--card); border-radius: 16px; padding: 28px 34px 30px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.card h2 { font-size: 22px; font-weight: 800; }
+
+/* first page */
+.hero { padding: 0; gap: 0; overflow: hidden; }
+.band { height: 12px; background: var(--accent); }
+.hero-in { padding: 30px 34px 32px; display: flex; flex-direction: column; gap: 12px; }
+.meta { font-size: 15px; color: var(--muted); }
+.hero h1 { font-size: clamp(36px, 5vw, 48px); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; }
+.goal { font-size: 19px; line-height: 1.5; }
+.chips { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { padding: 6px 14px; border-radius: 999px; background: var(--chip); font-size: 15px; font-weight: 600; }
+
+.defs { margin: 0; display: flex; flex-direction: column; gap: 16px; }
+.defs dt { font-weight: 700; }
+.defs dd { margin: 2px 0 0; color: var(--muted); }
+.qdefs { display: flex; flex-direction: column; gap: 14px; }
+.qdefs > div { display: flex; gap: 16px; align-items: flex-start; }
+.qn {
+  flex: none; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: var(--on-accent); font-size: 15px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.qdefs h3 { font-size: 17px; font-weight: 700; }
+.qdefs p { margin-top: 2px; color: var(--muted); }
+.steps { margin: 0; padding-left: 24px; display: flex; flex-direction: column; gap: 10px; }
+
+.lang-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 15px; }
+.lang-pick .label { color: var(--muted); }
+.lang-pick .seg { display: inline-flex; padding: 3px; gap: 3px; border-radius: 999px; background: var(--chip); }
+.lang-pick button {
+  min-height: 40px; padding: 6px 18px; border: 0; border-radius: 999px;
+  font-size: 15px; font-weight: 700; background: transparent; color: var(--ink);
+}
+.lang-pick button[aria-pressed="true"] { background: var(--invert-bg); color: var(--invert-ink); }
+.start { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px 20px; }
+.field { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 15px; font-weight: 700; }
+.field input {
+  width: 100%; padding: 14px 16px; font: inherit; font-size: 17px;
+  color: var(--ink); background: var(--card); border: 1.5px solid var(--muted); border-radius: 12px;
+}
+.error { color: var(--warn); font-size: 15px; font-weight: 600; }
+
+button { font: inherit; cursor: pointer; }
+.btn {
+  min-height: 54px; padding: 12px 40px; border: 0; border-radius: 999px;
+  font-size: 18px; font-weight: 800; background: var(--accent); color: var(--on-accent);
+}
+.btn.quiet { padding: 10px 24px; font-size: 17px; font-weight: 700; background: var(--card); color: var(--ink); border: 2px solid var(--muted); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.hint { font-size: 15px; color: var(--muted); }
+
+/* comparison page */
+.topline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+.page-pill { padding: 8px 18px; border-radius: 999px; background: var(--card); font-size: 17px; font-weight: 800; }
+.track { flex: 1 1 200px; height: 10px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.track div { height: 100%; border-radius: 999px; background: var(--deep); transition: width .25s ease; }
+
+.split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-items: start; }
+.stage { padding: 16px; gap: 12px; }
+.stage .hint { padding: 0 4px; }
+.stage video { width: 100%; height: auto; max-height: 76vh; display: block; background: #000; border-radius: 10px; }
+.stage figcaption { font-size: 20px; line-height: 1.4; font-weight: 700; color: var(--ink); text-align: center; padding: 2px 4px 4px; }
+.target { padding: 4px 4px 0; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; }
+.target span { color: var(--muted); font-weight: 700; }
+.missing {
+  min-height: 280px; padding: 20px; background: var(--chip); border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  text-align: center; font-size: 15px; color: var(--muted);
+}
+.missing code { font-size: 14px; color: var(--ink); word-break: break-all; }
+.side { min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+@media (min-width: 980px) {
+  .split { grid-template-columns: minmax(0, 2fr) minmax(340px, 1fr); }
+  .stage { position: sticky; top: 20px; }
+}
+
+.q { padding: 20px 22px 22px; gap: 14px; }
+.q legend { float: left; width: 100%; padding: 0; }
+.q-text { display: block; font-size: 17px; line-height: 1.4; font-weight: 700; }
+.q-help { display: block; margin-top: 4px; font-size: 15px; color: var(--muted); }
+.opts { display: flex; gap: 10px; }
+.opt { flex: 1 1 0; position: relative; }
+.opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.opt span {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px;
+  border: 2px solid var(--muted); border-radius: 999px; font-size: 20px; font-weight: 800;
+  background: var(--card); color: var(--ink);
+}
+.opt input:checked + span { background: var(--accent); border-color: var(--ink); color: var(--on-accent); }
+.opt input:checked + span::before { content: "✓"; }
+.opt input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 2px; }
+.nav { display: flex; gap: 10px; padding-top: 6px; }
+.nav .btn { flex: 2 1 0; padding-left: 20px; padding-right: 20px; }
+.nav .btn.quiet { flex: 1 1 0; }
+
+/* last pages */
+.end h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; }
+.end .lead { color: var(--muted); }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+
+@media (max-width: 560px) {
+  .card { padding: 22px 20px 24px; }
+  .hero { padding: 0; }
+  .hero-in { padding: 24px 20px 26px; }
+}
+@media (prefers-reduced-motion: reduce) { .track div { transition: none; } }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+/* =====================================================================
+   EDIT THIS BLOCK ONLY
+   Every text has an English (en) and a Korean (ko) version.
+   ===================================================================== */
+const STUDY = {
+  title: { en: "[Study title]", ko: "[스터디 제목]" },
+  org: { en: "[Lab / institution]", ko: "[소속 기관 / 연구실]" },
+
+  heading: { en: "User Study", ko: "유저 스터디" },
+
+  // [Description] section
+  goal: {
+    en: "We compare two methods that generate a motion performing a target content in the style of a reference motion.",
+    ko: "레퍼런스 모션의 스타일로 타깃 콘텐츠를 수행하는 모션을 생성하는 두 방법을 비교합니다."
+  },
+
+  terms: [
+    {
+      term: { en: "Reference style motion", ko: "레퍼런스 스타일 모션 (reference style motion)" },
+      text: {
+        en: "A motion clip that shows the style we want to transfer. The character performs an action in that style. This action is separate from the target content: look at how the character moves, not at what it is doing.",
+        ko: "전달하려는 스타일을 보여 주는 모션입니다. 캐릭터가 그 스타일이 반영된 행동을 수행하고 있습니다. 이 행동은 타깃 콘텐츠와 별개이므로, 무엇을 하는지가 아니라 어떻게 움직이는지를 봐 주세요."
+      }
+    },
+    {
+      term: { en: "Target content", ko: "타깃 콘텐츠 (target content)" },
+      text: {
+        en: "The action that A and B are supposed to perform. It is written at the top of each video, labeled “content”. It is not the action shown in the reference style motion.",
+        ko: "A와 B가 수행해야 하는 행동입니다. 각 영상 위쪽에 “content”로 적혀 있습니다. 레퍼런스 스타일 모션에 나오는 행동과는 다릅니다."
+      }
+    },
+    {
+      term: { en: "A and B", ko: "A와 B" },
+      text: {
+        en: "Two generated motions. Each one tries to perform the target content in the style of the reference motion.",
+        ko: "생성된 두 개의 모션입니다. 둘 다 레퍼런스 모션의 스타일로 타깃 콘텐츠를 수행하려고 한 결과입니다."
+      }
+    }
+  ],
+
+  // Asked on every page. `help` is shown in [Description] and under the question.
+  questions: [
+    {
+      text: {
+        en: "Which one better reflects the style of the reference motion?",
+        ko: "어느 쪽이 레퍼런스 모션의 스타일을 더 잘 반영하나요?"
+      },
+      help: {
+        en: "Compare how A and B move with how the reference style motion moves. Judge the style only. The reference performs a different action from the target content, so do not expect the action itself to match.",
+        ko: "A와 B의 움직임을 레퍼런스 스타일 모션의 움직임과 비교해 주세요. 스타일만 판단합니다. 레퍼런스는 타깃 콘텐츠와 다른 행동을 하고 있으므로 행동 자체가 같을 필요는 없습니다."
+      }
+    },
+    {
+      text: {
+        en: "Which one better generates the target content?",
+        ko: "어느 쪽이 타깃 콘텐츠(target content)를 더 잘 생성했나요?"
+      },
+      help: {
+        en: "Compare how clearly and correctly A and B perform the target content. Judge the action only, not the style.",
+        ko: "A와 B가 타깃 콘텐츠를 얼마나 명확하고 정확하게 수행하는지 비교해 주세요. 스타일이 아니라 행동만 판단합니다."
+      }
+    },
+    {
+      text: {
+        en: "Which one do you prefer overall?",
+        ko: "전체적으로 어느 쪽이 더 좋은가요?"
+      },
+      help: {
+        en: "Consider style, content, and how natural the motion looks, then choose the one you prefer.",
+        ko: "스타일, 콘텐츠, 움직임의 자연스러움을 함께 고려해 더 좋은 쪽을 골라 주세요."
+      }
+    }
+  ],
+
+  // [Instructions] section: rules participants should follow
+  instructions: [
+    {
+      en: "Each page shows one video containing the reference style motion and two results, A and B.",
+      ko: "각 페이지에는 영상이 하나 나옵니다. 영상 안에 레퍼런스 스타일 모션과 두 결과 A, B가 함께 들어 있습니다."
+    },
+    {
+      en: "Watch the whole video at least once before answering. You can replay it as many times as you like.",
+      ko: "답하기 전에 영상을 끝까지 한 번 이상 봐 주세요. 여러 번 다시 재생해도 됩니다."
+    },
+    {
+      en: "Answer each question on its own. A result can be better in style and worse in content, or the other way around.",
+      ko: "질문은 각각 따로 판단해 주세요. 한 결과가 스타일은 더 좋지만 콘텐츠는 못할 수도 있고, 그 반대일 수도 있습니다."
+    },
+    {
+      en: "Choose A or B for every question. You cannot move to the next page until all questions are answered.",
+      ko: "모든 질문에 A 또는 B를 골라 주세요. 모두 답해야 다음 페이지로 넘어갈 수 있습니다."
+    },
+    {
+      en: "There are no right or wrong answers. Choose what looks best to you.",
+      ko: "정답은 없습니다. 보이는 대로 골라 주세요."
+    },
+    {
+      en: "Do not refresh or close this page before you submit, or your answers will be lost.",
+      ko: "제출하기 전에 페이지를 새로고침하거나 닫으면 답이 사라집니다."
+    }
+  ],
+  estimatedTime: { en: "[About 00 minutes]", ko: "[약 00분]" },
+
+  // Shown under every video. Change it to match how your videos are laid out.
+  videoCaption: {
+    en: "[Left: reference style motion. Middle: A. Right: B.]",
+    ko: "[왼쪽: 레퍼런스 스타일 모션. 가운데: A. 오른쪽: B.]"
+  },
+
+  // One line per page. `video` is the combined video file.
+  // `content` is the target content of that set, shown in large type above the video.
+  // `oursIs` records which label is your method in that video ("A" or "B").
+  // It is never shown to participants; it is only used to score the answers.
+  // Vary it across sets when you render the videos so position does not give your method away.
+  trials: [
+    { id: "set01", video: "videos/set01.mp4", content: { en: "(tbd)", ko: "(tbd)" }, oursIs: "A" },
+    { id: "set02", video: "videos/set02.mp4", content: { en: "(tbd)", ko: "(tbd)" }, oursIs: "B" },
+    { id: "set03", video: "videos/set03.mp4", content: { en: "(tbd)", ko: "(tbd)" }, oursIs: "A" }
+  ],
+  shuffleTrials: true,   // show the sets in a different order to each participant
+
+  // Where to send responses: the web app URL of the Google Apps Script attached to your results sheet.
+  // If left empty, participants download a response file at the end instead.
+  submitUrl: "",
+
+  closing: {
+    en: "[Closing note: compensation details, contact email, etc.]",
+    ko: "[마무리 안내: 사례 지급 방법, 문의 이메일 등]"
+  }
+};
+/* ===================================================================== */
+
+// Fixed interface wording.
+const UI = {
+  en: {
+    description: "Description", goal: "Goal", see: "What you will see", asks: "What each question asks",
+    instructions: "Instructions", length: "Length", time: "Estimated time",
+    pagesChip: p => p + (p === 1 ? " page" : " pages"),
+    perPageChip: q => q + (q === 1 ? " question" : " questions") + " per page",
+    pageOf: (i, n) => "Page " + i + " of " + n,
+    email: "Email address", emailError: "Enter a valid email address to continue.",
+    next: "Next", back: "Back", target: "Target Content",
+    watchHint: "Watch the reference style motion first, then compare A and B.",
+    answerAll: "Answer every question to continue.",
+    videoMissing: "This video could not be loaded.", progress: "Progress",
+    reviewTitle: "You’ve answered every page",
+    reviewBody: "To change an answer, go back before you submit. Responses can’t be changed after they are submitted.",
+    submit: "Submit responses", submitting: "Submitting…",
+    sentTitle: "Responses submitted", sentBody: "Thank you for taking part. You can close this window.",
+    failTitle: "Your responses were not sent",
+    failBody: "Check your internet connection and submit again. If it still fails, download your response file and send it to the research team.",
+    again: "Submit again", download: "Download response file",
+    almostTitle: "You’re almost done", almostBody: "Download your response file and send it to the research team."
+  },
+  ko: {
+    description: "설명", goal: "목표", see: "영상에 나오는 것", asks: "각 질문이 묻는 것",
+    instructions: "지시문", length: "분량", time: "예상 소요 시간",
+    pagesChip: p => "총 " + p + "페이지",
+    perPageChip: q => "페이지당 질문 " + q + "개",
+    pageOf: (i, n) => i + " / " + n + " 페이지",
+    email: "이메일 주소", emailError: "올바른 이메일 주소를 입력해 주세요.",
+    next: "다음", back: "이전", target: "타깃 콘텐츠",
+    watchHint: "레퍼런스 스타일 모션을 먼저 보고, A와 B를 비교해 주세요.",
+    answerAll: "모든 질문에 답하면 넘어갈 수 있어요.",
+    videoMissing: "영상을 불러오지 못했습니다.", progress: "진행 상황",
+    reviewTitle: "모든 페이지에 답하셨습니다",
+    reviewBody: "답을 바꾸려면 제출하기 전에 이전으로 돌아가 수정해 주세요. 제출한 뒤에는 수정할 수 없습니다.",
+    submit: "응답 제출", submitting: "제출하는 중…",
+    sentTitle: "응답을 제출했습니다", sentBody: "참여해 주셔서 감사합니다. 이 창은 닫으셔도 됩니다.",
+    failTitle: "응답을 전송하지 못했습니다",
+    failBody: "인터넷 연결을 확인한 뒤 다시 제출해 주세요. 계속 안 되면 응답 파일을 내려받아 연구진에게 보내 주세요.",
+    again: "다시 제출", download: "응답 파일 내려받기",
+    almostTitle: "거의 끝났습니다", almostBody: "응답 파일을 내려받아 연구진에게 보내 주세요."
+  }
+};
+
+const app = document.getElementById("app");
+
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const k in (attrs || {})) {
+    const v = attrs[k];
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (v === true) el.setAttribute(k, "");
+    else el.setAttribute(k, v);
+  }
+  for (const kid of kids.flat()) {
+    if (kid == null || kid === false) continue;
+    el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  }
+  return el;
+}
+
+function shuffled(list) {
+  const a = list.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Decided once per session.
+const order = STUDY.shuffleTrials ? shuffled(STUDY.trials) : STUDY.trials.slice();
+
+const state = {
+  view: "intro",
+  lang: "en",
+  index: 0,
+  email: "",
+  startedAt: null,
+  answers: order.map(() => STUDY.questions.map(() => null)),  // "A" | "B"
+  sendStatus: "idle"
+};
+
+// Text in the chosen language.
+function t(value) { return value && typeof value === "object" ? (value[state.lang] ?? value.en) : value; }
+function ui() { return UI[state.lang]; }
+
+function show(view, index) {
+  state.view = view;
+  if (index != null) state.index = index;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function render() {
+  document.documentElement.lang = state.lang;
+  document.title = t(STUDY.heading);
+  const views = { intro: viewIntro, trial: viewTrial, review: viewReview, done: viewDone };
+  app.replaceChildren(views[state.view]());
+}
+
+/* ---------- 1. Description and instructions ---------- */
+function viewIntro() {
+  const L = ui();
+  const input = h("input", { id: "email", type: "email", autocomplete: "email", inputmode: "email", value: state.email });
+  const error = h("p", { class: "error", role: "alert", hidden: true }, L.emailError);
+
+  function setLang(lang) {
+    if (lang === state.lang) return;
+    state.email = input.value.trim();
+    state.lang = lang;
+    render();
+  }
+
+  function start() {
+    state.email = input.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email)) {
+      error.hidden = false;
+      input.focus();
+      return;
+    }
+    if (!state.startedAt) state.startedAt = new Date().toISOString();
+    show("trial", 0);
+  }
+
+  return h("main", { class: "narrow" },
+    h("header", { class: "card hero" },
+      h("div", { class: "band" }),
+      h("div", { class: "hero-in" },
+        h("h1", {}, t(STUDY.heading)),
+        h("p", { class: "goal" }, t(STUDY.goal)),
+        h("p", { class: "chips" },
+          h("span", {}, L.pagesChip(order.length)),
+          h("span", {}, L.perPageChip(STUDY.questions.length)),
+          h("span", {}, t(STUDY.estimatedTime))
+        )
+      )
+    ),
+    h("section", { class: "card" },
+      h("h2", {}, L.see),
+      h("dl", { class: "defs" }, STUDY.terms.map(x => h("div", {}, h("dt", {}, t(x.term)), h("dd", {}, t(x.text)))))
+    ),
+    h("section", { class: "card" },
+      h("h2", {}, L.asks),
+      h("div", { class: "qdefs" }, STUDY.questions.map((q, n) =>
+        h("div", {},
+          h("span", { class: "qn", "aria-hidden": "true" }, "Q" + (n + 1)),
+          h("div", {}, h("h3", {}, t(q.text)), h("p", {}, t(q.help)))
+        )
+      ))
+    ),
+    h("section", { class: "card" },
+      h("h2", {}, L.instructions),
+      h("ol", { class: "steps" }, STUDY.instructions.map(x => h("li", {}, t(x))))
+    ),
+    h("section", { class: "card" },
+      h("div", { class: "lang-pick", role: "group", "aria-label": "Language" },
+        h("span", { class: "label" }, "Language"),
+        h("div", { class: "seg" },
+          h("button", { type: "button", "aria-pressed": String(state.lang === "en"), onclick: () => setLang("en") }, "English"),
+          h("button", { type: "button", lang: "ko", "aria-pressed": String(state.lang === "ko"), onclick: () => setLang("ko") }, "한국어")
+        )
+      ),
+      h("div", { class: "start" },
+        h("div", { class: "field" },
+          h("label", { for: "email" }, L.email),
+          input,
+          error
+        ),
+        h("button", { class: "btn", type: "button", onclick: start }, L.next)
+      )
+    )
+  );
+}
+
+/* ---------- 2. Comparison page ---------- */
+function viewTrial() {
+  const L = ui();
+  const i = state.index;
+  const trial = order[i];
+  const answers = state.answers[i];
+
+  const video = h("video", { src: trial.video, controls: true, loop: true, autoplay: true, playsinline: true, preload: "auto" });
+  video.muted = true;
+  const missing = h("p", { class: "missing", hidden: true }, L.videoMissing, h("code", {}, trial.video));
+  video.addEventListener("error", () => { video.hidden = true; missing.hidden = false; });
+
+  const next = h("button", { class: "btn", type: "button", onclick: () => {
+    if (answers.includes(null)) return;
+    if (i + 1 < order.length) show("trial", i + 1); else show("review");
+  } }, L.next);
+  const hint = h("p", { class: "hint" }, L.answerAll);
+  function refresh() {
+    const open = answers.includes(null);
+    next.disabled = open;
+    hint.hidden = !open;
+  }
+
+  const questions = STUDY.questions.map((item, q) =>
+    h("fieldset", { class: "card q" },
+      h("legend", {},
+        h("span", { class: "q-text" }, "Q" + (q + 1) + ". " + t(item.text)),
+        item.help && h("span", { class: "q-help" }, t(item.help))
+      ),
+      h("div", { class: "opts" }, ["A", "B"].map(letter => {
+        const radio = h("input", { type: "radio", name: "q" + q, value: letter, checked: answers[q] === letter,
+          onchange: () => { answers[q] = letter; refresh(); } });
+        return h("label", { class: "opt" }, radio, h("span", {}, letter));
+      }))
+    )
+  );
+
+  refresh();
+
+  return h("main", { class: "wide" },
+    h("div", { class: "topline" },
+      h("h1", { class: "page-pill" }, L.pageOf(i + 1, order.length)),
+      h("div", { class: "track", role: "progressbar", "aria-label": L.progress, "aria-valuemin": "0", "aria-valuemax": String(order.length), "aria-valuenow": String(i + 1) },
+        h("div", { style: "width: " + Math.round(((i + 1) / order.length) * 100) + "%" })
+      )
+    ),
+    h("div", { class: "split" },
+      h("figure", { class: "card stage" },
+        h("p", { class: "target" }, h("span", {}, L.target + ": "), t(trial.content)),
+        h("p", { class: "hint" }, L.watchHint),
+        video,
+        missing,
+        h("figcaption", {}, t(STUDY.videoCaption))
+      ),
+      h("div", { class: "side" },
+        questions,
+        hint,
+        h("div", { class: "nav" },
+          h("button", { class: "btn quiet", type: "button", onclick: () => i === 0 ? show("intro") : show("trial", i - 1) }, L.back),
+          next
+        )
+      )
+    )
+  );
+}
+
+/* ---------- 3. Submit ---------- */
+function buildRows() {
+  return order.map((trial, i) => {
+    const row = { email: state.email, language: state.lang, trial: trial.id, order: i + 1, ours_is: trial.oursIs };
+    state.answers[i].forEach((letter, q) => {
+      row["q" + (q + 1) + "_letter"] = letter;
+      row["q" + (q + 1) + "_choice"] = letter === trial.oursIs ? "ours" : "baseline";
+    });
+    return row;
+  });
+}
+
+function toCsv(rows) {
+  const cols = Object.keys(rows[0] || {});
+  const cell = v => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"';
+  return "\uFEFF" + [cols.map(cell).join(",")].concat(rows.map(r => cols.map(c => cell(r[c])).join(","))).join("\r\n");
+}
+
+function downloadCsv() {
+  const blob = new Blob([toCsv(buildRows())], { type: "text/csv;charset=utf-8" });
+  const link = h("a", { href: URL.createObjectURL(blob), download: "responses_" + state.email.replace(/[^\w.-]+/g, "_") + ".csv" });
+  document.body.append(link);
+  link.click();
+  link.remove();
+}
+
+async function submit() {
+  if (!STUDY.submitUrl) { state.sendStatus = "no-url"; show("done"); return; }
+  const payload = {
+    study: STUDY.title.en,
+    email: state.email,
+    language: state.lang,
+    startedAt: state.startedAt,
+    finishedAt: new Date().toISOString(),
+    responses: buildRows()
+  };
+  try {
+    await fetch(STUDY.submitUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+    state.sendStatus = "sent";
+  } catch (e) {
+    state.sendStatus = "failed";
+  }
+  show("done");
+}
+
+function viewReview() {
+  const L = ui();
+  const send = h("button", { class: "btn", type: "button", onclick: () => { send.disabled = true; send.textContent = L.submitting; submit(); } }, L.submit);
+  return h("main", { class: "narrow" },
+    h("section", { class: "card end" },
+      h("h1", {}, L.reviewTitle),
+      h("p", { class: "lead" }, L.reviewBody),
+      h("div", { class: "row" },
+        h("button", { class: "btn quiet", type: "button", onclick: () => show("trial", order.length - 1) }, L.back),
+        send
+      )
+    )
+  );
+}
+
+function viewDone() {
+  const L = ui();
+  if (state.sendStatus === "sent") {
+    return h("main", { class: "narrow" },
+      h("section", { class: "card end" },
+        h("h1", {}, L.sentTitle),
+        h("p", { class: "lead" }, L.sentBody),
+        h("p", {}, t(STUDY.closing))
+      )
+    );
+  }
+  if (state.sendStatus === "failed") {
+    return h("main", { class: "narrow" },
+      h("section", { class: "card end" },
+        h("h1", {}, L.failTitle),
+        h("p", { class: "lead" }, L.failBody),
+        h("div", { class: "row" },
+          h("button", { class: "btn", type: "button", onclick: submit }, L.again),
+          h("button", { class: "btn quiet", type: "button", onclick: downloadCsv }, L.download)
+        )
+      )
+    );
+  }
+  return h("main", { class: "narrow" },
+    h("section", { class: "card end" },
+      h("h1", {}, L.almostTitle),
+      h("p", { class: "lead" }, L.almostBody),
+      h("div", {}, h("button", { class: "btn", type: "button", onclick: downloadCsv }, L.download)),
+      h("p", {}, t(STUDY.closing))
+    )
+  );
+}
+
+render();
+</script>
+</body>
+</html>
