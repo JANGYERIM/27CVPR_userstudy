@@ -1,0 +1,50 @@
+set	motion_id	humanml3d_id	style_ref_id	style_label	content_text
+SS	R0540_02201_013573__Drunk_M031920	013573	M031920	Drunk	a person walks in a large circle.
+SS	R0616_03792_006041__CrowdAvoidance_031478	006041	031478	CrowdAvoidance	a man walks anticlockwise in a circle repeatedly.
+SS	R0623_02590_007503__DragRightLeg_031829	007503	031829	DragRightLeg	the person is walking in a counter clockwise circle.
+SS	R0630_03530_002550__Old_034185	002550	034185	Old	a person walks forward in an askew line.
+SS	R0653_04571_M013561__Balance_030588	M013561	030588	Balance	a figure walks in a zig zag pattern
+SS	R0670_02247_002160__Swimming_036796	002160	036796	Swimming	a person walks backward and runs forward then walks backward again.
+SS	R0686_02275_M012320__Balance_030585	M012320	030585	Balance	a person walks in a circle clockwise.
+SS	R0699_00668_008360__DragRightLeg_031811	008360	031811	DragRightLeg	a person is walking forward.
+SS	R0708_02507_006454__Balance_M030576	006454	M030576	Balance	a person steps carefully while walking forwards.
+SS	R0710_04014_M012587__Swimming_M036761	M012587	M036761	Swimming	a person walks backwards, turns around and walks backwards the other way.
+SS	R0712_01577_M002951__Crouched_M031366	M002951	M031366	Crouched	a man takes several steps backwards.
+SS	R0721_01311_004473__Aeroplane_M030035	004473	M030035	Aeroplane	person is walking then turning around and walking back.
+SS	R0742_01509_009717__Swimming_036781	009717	036781	Swimming	the person is stepping over some thing.
+SS	R0751_01569_011091__Monk_033924	011091	033924	Monk	a person walks towards the right side.
+SS	R0793_01843_004050__Balance_030635	004050	030635	Balance	a man walks forward before turning around and walking back.
+SS	R0799_02082_001533__Flapping_M032199	001533	M032199	Flapping	person walks forward and crouches down.
+SS	R0123_04026_M008505__Rocket_M035574	M008505	M035574	Rocket	a person walks at a moderate pace.
+SS	R0400_01723_M012023__Chicken_M031207	M012023	M031207	Chicken	a person sneaking through a hallway.
+SS	R0002_01546_M000600__Robot_035512	M000600	035512	Robot	person walks backwards in a straight line
+SS	R0489_01483_M000497__Drunk_031920	M000497	031920	Drunk	A person walks forward in a straight line with arms spread open
+SS	R0424_02991_M014311__Chicken_031258	M014311	031258	Chicken	a person walks backward in a counterclockwise circle.
+SS	R0480_01606_M014574__InTheDark_032852	M014574	032852	InTheDark	a person walks slowly forward and to the right.
+SS	R0402_02006_M014194__Aeroplane_030037	M014194	030037	Aeroplane	a person walking in a counter counterclockwise direction
+SS	R0033_03216_008084__Superman_036552	008084	036552	Superman	a person wlowly walked by making the circle
+SS	R0247_01914_002471__Rocket_M035539	002471	M035539	Rocket	a person walks forward while keeping both arms to their side.
+SS	R0042_04389_M006185__Superman_M036582	M006185	M036582	Superman	this person briskly walks in a s-shape.
+SS	R0404_03561_001527__OnToesCrouched_M034612	001527	M034612	OnToesCrouched	a man walks forward in a snake like pattern.
+MDM	R0538_03269_V_013417__Monk_033924	V_013417	033924	Monk	a person starts walking then starts leaping clockwise
+MDM	R0543_00620_M002332__DragLeftLeg_031693	M002332	031693	DragLeftLeg	a person strides forward for a few steps, then slows and stops.
+MDM	R0558_00678_011608__Balance_M030615	011608	M030615	Balance	a person walking in a circle.
+MDM	R0570_04423_M012118__DragRightLeg_M031771	M012118	M031771	DragRightLeg	this person side steps right, stops and side steps left.
+MDM	R0575_01685_M000022__Chicken_031238	M000022	031238	Chicken	a person is walking and then makes a sharp turn left.
+MDM	R0603_00389_M010600__Swat_M036633	M010600	M036633	Swat	the man take 4 excited steps forward.
+MDM	R0608_02850_M010752__DragLeftLeg_M031744	M010752	M031744	DragLeftLeg	a figure falls backwards slightly in a straight line
+MDM	R0654_01740_M002897__Swimming_036796	M002897	036796	Swimming	a person playfully walks forwards, hopping slightly with each step.
+MDM	R0695_02677_M008266__Rocket_M035552	M008266	M035552	Rocket	the person is walking around the room.
+MDM	R0702_01632_012310__Roadrunner_035427	012310	035427	Roadrunner	a person walks and turns to his left.
+MDM	R0759_00218_M006426__Balance_030622	M006426	030622	Balance	a man sprints forward then goes down to all fours continuing forward and stands back up.
+MDM	R0769_03905_M014171__Swat_036669	M014171	036669	Swat	a walking man bumps something with his left leg then turns and walks in another direction.
+MDM	R0782_01639_M002530__Flapping_032231	M002530	032231	Flapping	a person walks towards the camera.
+MDM	R0047_01851_M000114__OnToesCrouched_M034578	M000114	M034578	OnToesCrouched	a person zig zagging in line
+MDM	R0389_00056_008559__Balance_030585	008559	030585	Balance	a person jogs straight forward.
+MDM	R0216_02456_J_013336__Star_M036251	J_013336	M036251	Star	a person is casually walking straight and then pivots to their left.
+MDM	R0438_01860_000704__Crouched_031416	000704	031416	Crouched	a man walks forward, slightly bending his knees with both hands at his sides.
+MDM	R0184_01974_006755__OnToesCrouched_034573	006755	034573	OnToesCrouched	a person sidesteps back and forth.
+MDM	R0382_00998_010143__Roadrunner_M035361	010143	M035361	Roadrunner	the person is walking towards the left.
+MDM	R0415_02350_M009273__Balance_M030640	M009273	M030640	Balance	a person walks in a large circle to their left.
+MDM	R0483_01317_002247__Star_036236	002247	036236	Star	a man seems to be walking forward on a straight line
+MDM	R0244_00442_M008117__Robot_035497	M008117	035497	Robot	walking forward and then stopping.
