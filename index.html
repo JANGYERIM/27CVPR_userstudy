@@ -78,6 +78,7 @@ main.wide { max-width: 1240px; padding: 28px 20px 72px; gap: 18px; }
 .defs { margin: 0; display: flex; flex-direction: column; gap: 16px; }
 .defs dt { font-weight: 700; }
 .defs dd { margin: 2px 0 0; color: var(--muted); }
+.example { margin-top: 16px; padding: 12px 14px; border-left: 3px solid currentColor; border-radius: 4px; background: rgba(127, 127, 127, 0.1); }
 .qdefs { display: flex; flex-direction: column; gap: 14px; }
 .qdefs > div { display: flex; gap: 16px; align-items: flex-start; }
 .qn {
@@ -193,26 +194,55 @@ const STUDY = {
     ko: "스타일화된 동작 생성에 대한 비교 평가를 진행합니다."
   },
 
+  // [Style vs. content] section: the two ideas every question depends on
+  concepts: [
+    {
+      term: { en: "Content = what the character does", ko: "콘텐츠 = 무엇을 하는가" },
+      text: {
+        en: "The kind of action and the path it follows. Examples: walking forward, walking in a circle, walking backward and then stopping.",
+        ko: "행동의 종류와 경로입니다. 예: 앞으로 걷는다, 원을 그리며 걷는다, 뒤로 걷다가 멈춘다."
+      }
+    },
+    {
+      term: { en: "Style = how the character does it", ko: "스타일 = 어떻게 하는가" },
+      text: {
+        en: "The way the body is used, which can change even when the action stays the same. Examples: posture (crouching, leaning), arm shape, stride length, rhythm and sense of speed.",
+        ko: "같은 행동을 하더라도 달라지는 몸의 쓰임새입니다. 예: 자세(웅크림, 몸 기울기), 팔 모양, 보폭, 리듬과 속도감."
+      }
+    }
+  ],
+  example: {
+    en: "Example. Suppose the reference motion walks forward, staggering with both arms spread wide, and the target action is “walks in a circle”. A good result staggers with both arms spread wide (style) while walking in a circle (content). It does not need to walk straight like the reference.",
+    ko: "예시. 레퍼런스가 “양팔을 옆으로 벌리고 비틀거리며 앞으로 걷는” 모션이고, 수행할 동작이 “원을 그리며 걷는다”라고 해 봅시다. 좋은 결과는 양팔을 벌리고 비틀거리면서(스타일) 원을 그리며 걷는(콘텐츠) 모션입니다. 레퍼런스처럼 직진할 필요는 없습니다."
+  },
+
   terms: [
     {
       term: { en: "Reference style motion", ko: "레퍼런스 스타일 모션 (reference style motion)" },
       text: {
-        en: "A motion clip that shows the style we want to transfer. The character performs an action in that style. This action is separate from the target content: look at how the character moves, not at what it is doing.",
-        ko: "전달하려는 스타일을 보여 주는 모션입니다. 캐릭터가 그 스타일이 반영된 행동을 수행하고 있습니다. 이 행동은 타깃 콘텐츠와 별개이므로, 무엇을 하는지가 아니라 어떻게 움직이는지를 봐 주세요."
+        en: "Shown on the left of the video. Look only at its posture, arm shape, and rhythm. Ignore which direction the character moves in and what path it follows.",
+        ko: "영상 왼쪽에 나옵니다. 여기서는 자세, 팔 모양, 리듬만 봐 주세요. 이 캐릭터가 어느 방향으로, 어떤 경로로 움직이는지는 무시합니다."
       }
     },
     {
-      term: { en: "Target content", ko: "타깃 콘텐츠 (target content)" },
+      term: { en: "Target action (content)", ko: "수행할 동작 (콘텐츠)" },
       text: {
-        en: "The action that Motion A and Motion B are supposed to perform. It is written at the top of each video, labeled “content”. It is not the action shown in the reference style motion.",
-        ko: "Motion A와 Motion B가 수행해야 하는 행동입니다. 각 영상 위쪽에 “content”로 적혀 있습니다. 레퍼런스 스타일 모션에 나오는 행동과는 다릅니다."
+        en: "Written as a sentence above the video, labeled “Target action” (for example, “walks in a circle”). This is the action that A and B are supposed to perform.",
+        ko: "영상 위에 “수행할 동작”이라는 이름으로 문장이 적혀 있습니다(예: “원을 그리며 걷는다”). A와 B가 수행해야 하는 행동입니다."
+      }
+    },
+    {
+      term: { en: "Style name", ko: "스타일 이름" },
+      text: {
+        en: "The style name written above the video (for example, “Rocket”) is only for reference. Judge by how the reference motion actually moves, not by the name.",
+        ko: "영상 위에 적힌 스타일 이름(예: “Rocket”)은 참고용입니다. 이름이 아니라 레퍼런스 모션의 실제 움직임을 기준으로 판단해 주세요."
       }
     },
     {
       term: { en: "Motion A and Motion B", ko: "모션 A와 모션 B" },
       text: {
-        en: "Two generated motions. Motion A and Motion B each try to perform the target content in the style of the reference motion.",
-        ko: "생성된 두 개의 모션입니다. 둘 다 레퍼런스 모션의 스타일로 타깃 콘텐츠를 수행하려고 한 결과입니다."
+        en: "Shown in the middle and on the right of the video. Both are generated results that try to perform the target action in the style of the reference motion.",
+        ko: "영상 가운데와 오른쪽에 나옵니다. 둘 다 레퍼런스의 스타일로 수행할 동작을 해내려고 한 생성 결과입니다."
       }
     }
   ],
@@ -225,18 +255,18 @@ const STUDY = {
         ko: "어느 쪽이 레퍼런스 모션의 스타일을 더 잘 반영하나요?"
       },
       help: {
-        en: "Compare how A and B move with how the reference style motion moves. Judge the style only. The reference performs a different action from the target content, so do not expect the action itself to match.",
-        ko: "A와 B의 움직임을 레퍼런스 스타일 모션의 움직임과 비교해 주세요. 스타일만 판단합니다. 레퍼런스는 타깃 콘텐츠와 다른 행동을 하고 있으므로 행동 자체가 같을 필요는 없습니다."
+        en: "Compare with the reference on the left. Choose the one whose posture, arm and leg shape, and rhythm look more like the reference. Do not mark a result down for moving in a different direction or along a different path from the reference.",
+        ko: "왼쪽의 레퍼런스와 비교합니다. 자세, 팔과 다리의 모양, 리듬이 레퍼런스와 더 닮은 쪽을 골라 주세요. 경로나 방향이 레퍼런스와 다른 것은 감점 요인이 아닙니다."
       }
     },
     {
       text: {
-        en: "Which one better generates the target content?",
-        ko: "어느 쪽이 타깃 콘텐츠(target content)를 더 잘 생성했나요?"
+        en: "Which one better performs the target action (content)?",
+        ko: "어느 쪽이 수행할 동작(콘텐츠)을 더 잘 해냈나요?"
       },
       help: {
-        en: "Compare how clearly and correctly A and B perform the target content. Judge the action only, not the style.",
-        ko: "A와 B가 타깃 콘텐츠를 얼마나 명확하고 정확하게 수행하는지 비교해 주세요. 스타일이 아니라 행동만 판단합니다."
+        en: "Compare with the sentence above the video. You do not need to look at the reference. Choose the one that performs the action, direction, and path in the sentence more accurately. Do not consider how well the style was applied.",
+        ko: "영상 위의 문장과 비교합니다. 레퍼런스는 보지 않아도 됩니다. 문장에 적힌 행동, 방향, 경로를 더 정확히 수행한 쪽을 골라 주세요. 스타일이 얼마나 잘 입혀졌는지는 고려하지 않습니다."
       }
     },
     {
@@ -245,8 +275,8 @@ const STUDY = {
         ko: "전체적으로 어느 쪽이 더 좋은가요?"
       },
       help: {
-        en: "Consider style, content, and how natural the motion looks, then choose the one you prefer.",
-        ko: "스타일, 콘텐츠, 움직임의 자연스러움을 함께 고려해 더 좋은 쪽을 골라 주세요."
+        en: "Consider style, content, and how natural the motion looks, then choose the one you prefer. Also take into account anything awkward, such as sliding feet, jitter, or unnatural poses.",
+        ko: "스타일, 콘텐츠, 움직임의 자연스러움을 함께 고려해 더 좋은 쪽을 골라 주세요. 발 미끄러짐, 떨림, 부자연스러운 자세 같은 어색함도 함께 고려합니다."
       }
     }
   ],
@@ -256,6 +286,10 @@ const STUDY = {
     {
       en: "Each page shows one video containing the reference style motion and two results, A and B.",
       ko: "각 페이지에는 영상이 하나 나옵니다. 영상 안에 레퍼런스 스타일 모션과 두 결과 A, B가 함께 들어 있습니다."
+    },
+    {
+      en: "First work out what is distinctive about the style from the reference on the left, then read the target action sentence above the video, and then compare A and B.",
+      ko: "먼저 왼쪽 레퍼런스에서 스타일의 특징을 파악하고, 영상 위의 수행할 동작 문장을 읽은 뒤, A와 B를 비교해 주세요."
     },
     {
       en: "Watch the whole video at least once before answering. You can replay it as many times as you like.",
@@ -282,8 +316,8 @@ const STUDY = {
 
   // Shown under every video. Change it to match how your videos are laid out.
   videoCaption: {
-    en: "[Left: reference style motion. Middle: A. Right: B.]",
-    ko: "[왼쪽: 레퍼런스 스타일 모션. 가운데: A. 오른쪽: B.]"
+    en: "Left: reference style motion. Middle: A. Right: B.",
+    ko: "왼쪽: 레퍼런스 스타일 모션. 가운데: A. 오른쪽: B."
   },
 
   // One line per page. `video` is the combined video file.
@@ -339,13 +373,13 @@ const STUDY = {
 // Fixed interface wording.
 const UI = {
   en: {
-    description: "Description", goal: "Goal", see: "What you will see", asks: "What each question asks",
+    description: "Description", goal: "Goal", concepts: "Style vs. content", see: "What you will see", asks: "What each question asks",
     instructions: "Instructions", length: "Length", time: "Estimated time",
     pagesChip: p => p + (p === 1 ? " page" : " pages"),
     perPageChip: q => q + (q === 1 ? " question" : " questions") + " per page",
     pageOf: (i, n) => "Page " + i + " of " + n,
     email: "Email address", emailError: "Enter a valid email address to continue.",
-    next: "Next", back: "Back", target: "Target Content", style: "Style",
+    next: "Next", back: "Back", target: "Target action", style: "Style",
     watchHint: "Watch the reference style motion first, then compare A and B.",
     answerAll: "Answer every question to continue.",
     videoMissing: "This video could not be loaded.", progress: "Progress",
@@ -359,13 +393,13 @@ const UI = {
     almostTitle: "You’re almost done", almostBody: "Download your response file and send it to the research team."
   },
   ko: {
-    description: "설명", goal: "목표", see: "영상에 나오는 것", asks: "각 질문이 묻는 것",
+    description: "설명", goal: "목표", concepts: "스타일과 콘텐츠 구분하기", see: "영상에 나오는 것", asks: "각 질문이 묻는 것",
     instructions: "지시문", length: "분량", time: "예상 소요 시간",
     pagesChip: p => "총 " + p + "페이지",
     perPageChip: q => "페이지당 질문 " + q + "개",
     pageOf: (i, n) => i + " / " + n + " 페이지",
     email: "이메일 주소", emailError: "올바른 이메일 주소를 입력해 주세요.",
-    next: "다음", back: "이전", target: "타깃 콘텐츠", style: "스타일",
+    next: "다음", back: "이전", target: "수행할 동작", style: "스타일",
     watchHint: "레퍼런스 스타일 모션을 먼저 보고, A와 B를 비교해 주세요.",
     answerAll: "모든 질문에 답하면 넘어갈 수 있어요.",
     videoMissing: "영상을 불러오지 못했습니다.", progress: "진행 상황",
@@ -569,6 +603,11 @@ function viewIntro() {
           h("span", {}, t(STUDY.estimatedTime))
         )
       )
+    ),
+    h("section", { class: "card" },
+      h("h2", {}, L.concepts),
+      h("dl", { class: "defs" }, STUDY.concepts.map(x => h("div", {}, h("dt", {}, t(x.term)), h("dd", {}, t(x.text))))),
+      h("p", { class: "example" }, t(STUDY.example))
     ),
     h("section", { class: "card" },
       h("h2", {}, L.see),
