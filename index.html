@@ -136,10 +136,6 @@ button { font: inherit; cursor: pointer; }
 }
 .missing code { font-size: 14px; color: var(--ink); word-break: break-all; }
 .side { min-width: 0; display: flex; flex-direction: column; gap: 12px; }
-@media (min-width: 980px) {
-  .split { grid-template-columns: minmax(0, 2fr) minmax(340px, 1fr); }
-  .stage { position: sticky; top: 20px; }
-}
 
 .q { padding: 20px 22px 22px; gap: 14px; }
 .q legend { float: left; width: 100%; padding: 0; }
@@ -684,8 +680,7 @@ function viewTrial() {
       h("h1", { class: "page-pill" }, L.pageOf(i + 1, order.length)),
       h("div", { class: "track", role: "progressbar", "aria-label": L.progress, "aria-valuemin": "0", "aria-valuemax": String(order.length), "aria-valuenow": String(i + 1) },
         h("div", { style: "width: " + Math.round(((i + 1) / order.length) * 100) + "%" })
-      ),
-      languagePicker(changeLanguage)
+      )
     ),
     h("div", { class: "split" },
       h("figure", { class: "card stage" },
@@ -768,7 +763,6 @@ function viewReview() {
   const send = h("button", { class: "btn", type: "button", onclick: () => { send.disabled = true; send.textContent = L.submitting; submit(); } }, L.submit);
   return h("main", { class: "narrow" },
     h("section", { class: "card end" },
-      languagePicker(changeLanguage),
       h("h1", {}, L.reviewTitle),
       h("p", { class: "lead" }, L.reviewBody),
       h("div", { class: "row" },
@@ -784,7 +778,6 @@ function viewDone() {
   if (state.sendStatus === "sent") {
     return h("main", { class: "narrow" },
       h("section", { class: "card end" },
-        languagePicker(changeLanguage),
         h("h1", {}, L.sentTitle),
         h("p", { class: "lead" }, L.sentBody),
         h("p", {}, t(STUDY.closing))
@@ -794,7 +787,6 @@ function viewDone() {
   if (state.sendStatus === "failed") {
     return h("main", { class: "narrow" },
       h("section", { class: "card end" },
-        languagePicker(changeLanguage),
         h("h1", {}, L.failTitle),
         h("p", { class: "lead" }, L.failBody),
         h("div", { class: "row" },
@@ -806,7 +798,6 @@ function viewDone() {
   }
   return h("main", { class: "narrow" },
     h("section", { class: "card end" },
-      languagePicker(changeLanguage),
       h("h1", {}, L.almostTitle),
       h("p", { class: "lead" }, L.almostBody),
       h("div", {}, h("button", { class: "btn", type: "button", onclick: downloadCsv }, L.download)),
