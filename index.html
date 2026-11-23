@@ -78,6 +78,9 @@ main.wide { max-width: 1240px; padding: 28px 20px 72px; gap: 18px; }
 .defs { margin: 0; display: flex; flex-direction: column; gap: 16px; }
 .defs dt { font-weight: 700; }
 .defs dd { margin: 2px 0 0; color: var(--muted); }
+.lead-in { margin-bottom: 14px; }
+.concepts dt { font-size: 19px; font-weight: 800; }
+.concepts dd.sub { margin-top: 0; color: var(--ink); font-weight: 600; }
 .exfig { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(140px, 0.6fr) minmax(0, 1fr); gap: 12px; align-items: start; }
 .exfig figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
 .exfig img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: contain; background: #FFFFFF; border: 1px solid var(--line); border-radius: 10px; }
@@ -206,19 +209,25 @@ const STUDY = {
   },
 
   // [Style vs. content] section: the two ideas every question depends on
+  conceptsLead: {
+    en: "Before the evaluation, please read how motion content and motion style are distinguished in this study.",
+    ko: "평가에 앞서, 본 연구에서 모션의 콘텐츠와 스타일을 어떻게 구분하는지 읽어 주세요."
+  },
   concepts: [
     {
-      term: { en: "Content = what the character does", ko: "콘텐츠 = 무엇을 하는가" },
+      term: { en: "Content", ko: "콘텐츠 (Content)" },
+      sub: { en: "What the character does", ko: "무엇을 하는가" },
       text: {
-        en: "The kind of action and the path it follows. Examples: walking forward, walking in a circle, walking backward and then stopping.",
-        ko: "행동의 종류와 경로입니다. 예: 앞으로 걷는다, 원을 그리며 걷는다, 뒤로 걷다가 멈춘다."
+        en: "The kind of action and the direction or path it follows. Examples: walking forward, walking in a circle, walking backward and then stopping.",
+        ko: "행동의 종류와 이동 방향 또는 경로입니다. 예: 앞으로 걷는다, 원을 그리며 걷는다, 뒤로 걷다가 멈춘다."
       }
     },
     {
-      term: { en: "Style = how the character does it", ko: "스타일 = 어떻게 하는가" },
+      term: { en: "Style", ko: "스타일 (Style)" },
+      sub: { en: "How the character does it", ko: "어떻게 하는가" },
       text: {
-        en: "The way the body is used, which can change even when the action stays the same. Examples: posture (crouching, leaning), arm shape, stride length, rhythm and sense of speed.",
-        ko: "같은 행동을 하더라도 달라지는 몸의 쓰임새입니다. 예: 자세(웅크림, 몸 기울기), 팔 모양, 보폭, 리듬과 속도감."
+        en: "The way the body is used, which can change even when the action stays the same. Examples: posture (crouching, leaning), arm and leg shape, stride length, rhythm, and sense of speed.",
+        ko: "같은 행동을 하더라도 달라지는 몸의 쓰임새입니다. 예: 자세(웅크림, 몸 기울기), 팔과 다리의 모양, 보폭, 리듬, 속도감."
       }
     }
   ],
@@ -403,7 +412,7 @@ const STUDY = {
 // Fixed interface wording.
 const UI = {
   en: {
-    description: "Description", goal: "Goal", concepts: "Style vs. content", see: "What you will see", asks: "What each question asks",
+    description: "Description", goal: "Goal", concepts: "Preliminary Explanation: Motion Content and Style", see: "What you will see", asks: "What each question asks",
     instructions: "Instructions", length: "Length", time: "Estimated time",
     pagesChip: p => p + (p === 1 ? " page" : " pages"),
     perPageChip: q => q + (q === 1 ? " question" : " questions") + " per page",
@@ -423,7 +432,7 @@ const UI = {
     almostTitle: "You’re almost done", almostBody: "Download your response file and send it to the research team."
   },
   ko: {
-    description: "설명", goal: "목표", concepts: "스타일과 콘텐츠 구분하기", see: "영상에 나오는 것", asks: "각 질문이 묻는 것",
+    description: "설명", goal: "목표", concepts: "사전 설명: 모션의 콘텐츠와 스타일", see: "영상에 나오는 것", asks: "각 질문이 묻는 것",
     instructions: "지시문", length: "분량", time: "예상 소요 시간",
     pagesChip: p => "총 " + p + "페이지",
     perPageChip: q => "페이지당 질문 " + q + "개",
@@ -656,7 +665,8 @@ function viewIntro() {
     ),
     h("section", { class: "card" },
       h("h2", {}, L.concepts),
-      h("dl", { class: "defs" }, STUDY.concepts.map(x => h("div", {}, h("dt", {}, t(x.term)), h("dd", {}, t(x.text))))),
+      h("p", { class: "lead-in" }, t(STUDY.conceptsLead)),
+      h("dl", { class: "defs concepts" }, STUDY.concepts.map(x => h("div", {}, h("dt", {}, t(x.term)), h("dd", { class: "sub" }, t(x.sub)), h("dd", {}, t(x.text))))),
       exampleFigure(),
       h("p", { class: "example" }, t(STUDY.example))
     ),
