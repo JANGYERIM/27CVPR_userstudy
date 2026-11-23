@@ -232,8 +232,8 @@ const STUDY = {
     }
   ],
   example: {
-    en: "Example. The reference (left) walks straight ahead while balancing with both arms spread. The target action is “a person is walking in a circle”. A good result (right) walks in a circle (content) while keeping the same balancing posture (style). It does not need to walk straight like the reference.",
-    ko: "예시. 레퍼런스(왼쪽)는 양팔을 벌려 균형을 잡으며 앞으로 곧게 걷습니다. 수행할 동작은 “원을 그리며 걷는다”입니다. 좋은 결과(오른쪽)는 균형 잡는 자세를 그대로 유지하면서(스타일) 원을 그리며 걷는(콘텐츠) 모션입니다. 레퍼런스처럼 직진할 필요는 없습니다."
+    en: "Example. The reference (left) walks straight ahead while balancing with both arms spread. The target content is “a person is walking in a circle”. A good result (right) walks in a circle (content) while keeping the same balancing posture (style). It does not need to walk straight like the reference.",
+    ko: "예시. 레퍼런스(왼쪽)는 양팔을 벌려 균형을 잡으며 앞으로 곧게 걷습니다. 타깃 콘텐츠는 “원을 그리며 걷는다”입니다. 좋은 결과(오른쪽)는 균형 잡는 자세를 그대로 유지하면서(스타일) 원을 그리며 걷는(콘텐츠) 모션입니다. 레퍼런스처럼 직진할 필요는 없습니다."
   },
   // Illustrated version of the example above.
   exampleFigure: {
@@ -264,10 +264,10 @@ const STUDY = {
       }
     },
     {
-      term: { en: "Target action (content)", ko: "수행할 동작 (콘텐츠)" },
+      term: { en: "Target content (action)", ko: "타깃 콘텐츠 (동작)" },
       text: {
-        en: "Written as a sentence above the video, labeled “Target action” (for example, “walks in a circle”). This is the action that A and B are supposed to perform.",
-        ko: "영상 위에 “수행할 동작”이라는 이름으로 문장이 적혀 있습니다(예: “원을 그리며 걷는다”). A와 B가 수행해야 하는 행동입니다."
+        en: "Written as a sentence above the video, labeled “Target content (action)” (for example, “walks in a circle”). This is the action that A and B are supposed to perform.",
+        ko: "영상 위에 “타깃 콘텐츠 (동작)”이라는 이름으로 문장이 적혀 있습니다(예: “원을 그리며 걷는다”). A와 B가 수행해야 하는 행동입니다."
       }
     },
     {
@@ -280,8 +280,8 @@ const STUDY = {
     {
       term: { en: "Motion A and Motion B", ko: "모션 A와 모션 B" },
       text: {
-        en: "Shown in the middle and on the right of the video. Both are generated results that try to perform the target action in the style of the reference motion.",
-        ko: "영상 가운데와 오른쪽에 나옵니다. 둘 다 레퍼런스의 스타일로 수행할 동작을 해내려고 한 생성 결과입니다."
+        en: "Shown in the middle and on the right of the video. Both are generated results that try to perform the target content in the style of the reference motion.",
+        ko: "영상 가운데와 오른쪽에 나옵니다. 둘 다 레퍼런스의 스타일로 타깃 콘텐츠를 수행하려고 한 생성 결과입니다."
       }
     }
   ],
@@ -300,8 +300,8 @@ const STUDY = {
     },
     {
       text: {
-        en: "Which one better performs the target action (content)?",
-        ko: "어느 쪽이 수행할 동작(콘텐츠)을 더 잘 해냈나요?"
+        en: "Which one better performs the target content (action)?",
+        ko: "어느 쪽이 타깃 콘텐츠(동작)를 더 잘 수행했나요?"
       },
       help: {
         en: "Compare with the sentence above the video. You do not need to look at the reference. Choose the one that performs the action, direction, and path in the sentence more accurately. Do not consider how well the style was applied.",
@@ -327,8 +327,8 @@ const STUDY = {
       ko: "각 페이지에는 영상이 하나 나옵니다. 영상 안에 레퍼런스 스타일 모션과 두 결과 A, B가 함께 들어 있습니다."
     },
     {
-      en: "First work out what is distinctive about the style from the reference on the left, then read the target action sentence above the video, and then compare A and B.",
-      ko: "먼저 왼쪽 레퍼런스에서 스타일의 특징을 파악하고, 영상 위의 수행할 동작 문장을 읽은 뒤, A와 B를 비교해 주세요."
+      en: "First work out what is distinctive about the style from the reference on the left, then read the target content sentence above the video, and then compare A and B.",
+      ko: "먼저 왼쪽 레퍼런스에서 스타일의 특징을 파악하고, 영상 위의 타깃 콘텐츠 문장을 읽은 뒤, A와 B를 비교해 주세요."
     },
     {
       en: "Watch the whole video at least once before answering. You can replay it as many times as you like.",
@@ -418,7 +418,7 @@ const UI = {
     perPageChip: q => q + (q === 1 ? " question" : " questions") + " per page",
     pageOf: (i, n) => "Page " + i + " of " + n,
     email: "Email address", emailError: "Enter a valid email address to continue.",
-    next: "Next", back: "Back", target: "Target action", style: "Style",
+    next: "Next", back: "Back", target: "Target content (action)", targetShort: "Target content", style: "Style",
     watchHint: "Watch the reference style motion first, then compare A and B.",
     answerAll: "Answer every question to continue.",
     videoMissing: "This video could not be loaded.", progress: "Progress",
@@ -438,7 +438,7 @@ const UI = {
     perPageChip: q => "페이지당 질문 " + q + "개",
     pageOf: (i, n) => i + " / " + n + " 페이지",
     email: "이메일 주소", emailError: "올바른 이메일 주소를 입력해 주세요.",
-    next: "다음", back: "이전", target: "수행할 동작", style: "스타일",
+    next: "다음", back: "이전", target: "타깃 콘텐츠 (동작)", targetShort: "타깃 콘텐츠", style: "스타일",
     watchHint: "레퍼런스 스타일 모션을 먼저 보고, A와 B를 비교해 주세요.",
     answerAll: "모든 질문에 답하면 넘어갈 수 있어요.",
     videoMissing: "영상을 불러오지 못했습니다.", progress: "진행 상황",
@@ -608,7 +608,7 @@ function exampleFigure() {
       h("figcaption", {}, t(f.reference.label))
     ),
     h("div", { class: "exfig-mid" },
-      h("span", { class: "exfig-label" }, L.target),
+      h("span", { class: "exfig-label" }, L.targetShort),
       h("span", { class: "exfig-action" }, "“" + t(f.action) + "”"),
       h("span", { class: "exfig-arrow", "aria-hidden": "true" }, "→")
     ),
